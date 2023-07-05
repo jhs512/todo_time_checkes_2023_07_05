@@ -1,8 +1,13 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
 <div>
     <ul>
         <li th:each="todo : ${todos}">
             <span th:text="${todo.title}"></span>
-            <button>삭제</button>
+            <button onclick="if ( !confirm('정말로?') ) return false; $(this).next().submit();">삭제</button>
+            <form hidden th:action="@{|/${todo.id}|}" method="POST">
+                <input type="hidden" name="_method" value="DELETE" />
+            </form>
         </li>
     </ul>
 </div>
