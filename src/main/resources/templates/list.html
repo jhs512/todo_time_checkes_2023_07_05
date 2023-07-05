@@ -1,0 +1,8 @@
+<div>
+    <ul>
+        <li th:each="todo : ${todos}">
+            <span th:text="${todo.title}"></span>
+            <button>삭제</button>
+        </li>
+    </ul>
+</div>
