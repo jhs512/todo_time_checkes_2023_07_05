@@ -19,6 +19,4 @@ public class TodoTimeCheck {
     @ManyToOne
     private Todo todo;
     private LocalDate checkDate;
-    private String title;
-    private LocalDateTime deleteDate;
 }

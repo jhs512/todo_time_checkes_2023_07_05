@@ -3,12 +3,11 @@ package com.example.demo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,6 +33,13 @@ public class TodoController {
     @PostMapping("/create")
     public String create(String title) {
         todoService.save(title);
+
+        return "redirect:/";
+    }
+
+    @PatchMapping("/toggleCheck/{id}")
+    public String toggleCheck(@PathVariable long id) {
+        todoService.toggleCheck(id, LocalDate.now());
 
         return "redirect:/";
     }

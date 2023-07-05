@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,7 @@ public class TodoService {
     private final TodoRepository todoRepository;
 
     public List<Todo> findAll() {
-        return todoRepository.findByDeleteDate(null);
+        return todoRepository.findByDeleteDateNull();
     }
 
     @Transactional
@@ -39,5 +40,18 @@ public class TodoService {
     public void delete(long id) {
         Todo todo = todoRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         todo.delete();
+    }
+
+    public Optional<Todo> findById(long id) {
+        return todoRepository.findByDeleteDateNullAndId(id);
+    }
+
+    @Transactional
+    public void toggleCheck(long id, LocalDate checkDate) {
+        Todo todo = findById(id).orElse(null);
+
+        if (todo == null) return;
+
+        todo.toggleTodoTimeCheck(checkDate);
     }
 }

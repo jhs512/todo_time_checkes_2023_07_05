@@ -3,6 +3,7 @@ package com.example.demo;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,5 +31,35 @@ public class Todo {
 
     public void delete() {
         deleteDate = LocalDateTime.now();
+    }
+
+    public void removeTodoTimeCheck(TodoTimeCheck todoTimeCheck) {
+        timeCheckes.remove(todoTimeCheck);
+    }
+
+    public TodoTimeCheck addTodoTimeCheck(LocalDate now) {
+        return TodoTimeCheck.builder()
+                .todo(this)
+                .checkDate(now)
+                .build();
+    }
+
+    public void toggleTodoTimeCheck(LocalDate checkDate) {
+        TodoTimeCheck todoTimeCheck = timeCheckes.stream()
+                .filter(e -> e.getCheckDate().equals(checkDate))
+                .findFirst()
+                .orElse(null);
+
+        if (todoTimeCheck == null) {
+            timeCheckes.add(
+                    TodoTimeCheck
+                            .builder()
+                            .todo(this)
+                            .checkDate(checkDate)
+                            .build()
+            );
+        } else {
+            removeTodoTimeCheck(todoTimeCheck);
+        }
     }
 }
