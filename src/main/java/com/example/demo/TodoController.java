@@ -7,12 +7,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class TodoController {
     private final TodoService todoService;
+
+    @GetMapping("/history")
+    public String showHistory(Model model, String dateStr) {
+        LocalDate date = dateStr == null ? LocalDate.now() : LocalDate.parse(dateStr);
+        List<Todo> history = todoService.findHistory(date);
+
+        model.addAttribute("history", history);
+
+        return "history";
+    }
 
     @GetMapping("/")
     public String showList(Model model) {

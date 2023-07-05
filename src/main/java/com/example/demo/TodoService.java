@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class TodoService {
+    private final TodoTimeCheckService todoTimeCheckService;
     private final TodoRepository todoRepository;
 
     public List<Todo> findAll() {
@@ -53,5 +55,14 @@ public class TodoService {
         if (todo == null) return;
 
         todo.toggleTodoTimeCheck(checkDate);
+    }
+
+    public List<Todo> findHistory(LocalDate date) {
+        List<TodoTimeCheck> todoTimeChecks = todoTimeCheckService.findByCheckDate(date);
+
+        return todoTimeChecks
+                .stream()
+                .map(TodoTimeCheck::getTodo)
+                .toList();
     }
 }
