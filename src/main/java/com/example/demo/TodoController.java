@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -23,9 +24,16 @@ public class TodoController {
         return "list";
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable long id) {
         todoService.delete(id);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/create")
+    public String create(String title) {
+        todoService.save(title);
 
         return "redirect:/";
     }

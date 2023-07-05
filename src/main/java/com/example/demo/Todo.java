@@ -23,4 +23,12 @@ public class Todo {
     @Builder.Default
     @OneToMany(mappedBy = "todo", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<TodoTimeCheck> timeCheckes = new ArrayList<>();
+
+    public void revive() {
+        deleteDate = null;
+    }
+
+    public void delete() {
+        deleteDate = LocalDateTime.now();
+    }
 }
