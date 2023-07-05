@@ -51,13 +51,7 @@ public class Todo {
                 .orElse(null);
 
         if (todoTimeCheck == null) {
-            timeCheckes.add(
-                    TodoTimeCheck
-                            .builder()
-                            .todo(this)
-                            .checkDate(checkDate)
-                            .build()
-            );
+            addTodoTimeCheck(checkDate);
         } else {
             removeTodoTimeCheck(todoTimeCheck);
         }
