@@ -62,4 +62,9 @@ public class Todo {
             removeTodoTimeCheck(todoTimeCheck);
         }
     }
+
+    public boolean isCheckedWhen(String checkDate) {
+        return timeCheckes.stream()
+                .anyMatch(e -> e.getCheckDate().toString().equals(checkDate));
+    }
 }

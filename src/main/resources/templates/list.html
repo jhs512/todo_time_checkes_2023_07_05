@@ -10,14 +10,14 @@
 <div>
     <ul>
         <li th:each="todo : ${todos}">
-            <input type="checkbox" onclick="$(this).next().submit(); return false;">
+            <input th:checked="${todo.isCheckedWhen(today)}" type="checkbox" onclick="$(this).next().submit(); return false;">
             <form hidden th:action="@{|/toggleCheck/${todo.id}|}" method="POST">
-                <input type="hidden" name="_method" value="PATCH" />
+                <input type="hidden" name="_method" value="PATCH"/>
             </form>
             <span th:text="${todo.title}"></span>
             <button onclick="if ( !confirm('정말로?') ) return false; $(this).next().submit();">삭제</button>
             <form hidden th:action="@{|/delete/${todo.id}|}" method="POST">
-                <input type="hidden" name="_method" value="DELETE" />
+                <input type="hidden" name="_method" value="DELETE"/>
             </form>
         </li>
     </ul>

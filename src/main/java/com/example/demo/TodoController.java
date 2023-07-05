@@ -16,8 +16,10 @@ public class TodoController {
 
     @GetMapping("/")
     public String showList(Model model) {
+        String today = LocalDate.now().toString();
         List<Todo> todos = todoService.findAll();
 
+        model.addAttribute("today", today);
         model.addAttribute("todos", todos);
 
         return "list";
